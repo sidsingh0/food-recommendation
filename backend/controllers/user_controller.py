@@ -1,5 +1,5 @@
 from app import app
-from model.user_model import user_model
+from models.user_model import user_model
 from flask import request
 
 user=user_model()
