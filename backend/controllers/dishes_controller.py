@@ -8,3 +8,7 @@ dish=dish_model()
 def dish_query():
     data = request.get_json(silent=True)
     return dish.get_by_query(data)
+
+@app.route("/dishes/recommend/<id>",methods=["GET"])
+def dish_recommend(id):
+    return dish.recommend(id)
