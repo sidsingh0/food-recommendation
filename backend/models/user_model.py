@@ -39,7 +39,7 @@ class user_model():
                 else:
                     return make_response({"message":"Invalid credentials"},400)
             else:
-                return make_response({"message":"User not found."},400)
+                return make_response({"message":"User not found."},404)
         except Exception as e:
             print(e)
             return make_response({"message":"Internal server error."},500)
@@ -62,7 +62,7 @@ class user_model():
                 token=create_access_token(user.username)
                 return make_response({"message": "User created successfully","token":token}, 200)
             else:
-                return make_response({"message": "Error creating user"})
+                return make_response({"message": "Error creating user"},500)
         except Exception as e:
             return make_response({"message":"Internal server error."},500)
     
@@ -71,9 +71,9 @@ class user_model():
         try:
             username=get_jwt_identity()
         except:
-            return make_response({"message": "Invalid token"}, 400)
+            return make_response({"message": "Invalid token"}, 401)
         if (not username):
-            return make_response({"message":"Invalid token"},400)
+            return make_response({"message":"Invalid token"},401)
         try:
             dish_id=int(data.get("id"))
             df=pd.read_csv('data/dishes.csv')
@@ -87,7 +87,7 @@ class user_model():
                 self.collection.update_one({"username":username},{'$addToSet': {'wishlist': dish_id}})
                 return make_response({"message":"Added to the wishlist!"},200)
             else:
-                return make_response({"message":"User not found"},400)
+                return make_response({"message":"User not found"},404)
         except Exception as e:
             print(e)
             return make_response({"message":"Internal server error."},500)
@@ -97,9 +97,9 @@ class user_model():
         try:
             username=get_jwt_identity()
         except:
-            return make_response({"message": "Invalid token"}, 400)
+            return make_response({"message": "Invalid token"}, 401)
         if (not username):
-            return make_response({"message":"Invalid token"},400)
+            return make_response({"message":"Invalid token"},401)
         try:
             dish_id=int(id)
         except:
@@ -110,7 +110,7 @@ class user_model():
                 self.collection.update_one({"username":username},{'$pull': {'wishlist': dish_id}})
                 return make_response({"message":"Removed from the wishlist."},200)
             else:
-                return make_response({"message":"User not found"},400)
+                return make_response({"message":"User not found"},404)
         except Exception as e:
             print(e)
             return make_response({"message":"Internal server error."},500)
@@ -120,16 +120,16 @@ class user_model():
         try:
             username=get_jwt_identity()
         except:
-            return make_response({"message": "Invalid token"}, 400)
+            return make_response({"message": "Invalid token"}, 401)
         if (not username):
-            return make_response({"message":"Invalid token"},400)        
+            return make_response({"message":"Invalid token"},401)        
         try:
             user_details=self.collection.find_one({"username":username})
             if user_details:
                 wishlist=user_details.get("wishlist")
                 return recommender.recommend_list(wishlist)
             else:
-                return make_response({"message":"User not found"},400)
+                return make_response({"message":"User not found"},404)
         except Exception as e:
             print(e)
             return make_response({"message":"Internal server error."},500)
