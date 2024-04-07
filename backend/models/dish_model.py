@@ -3,7 +3,18 @@ from flask import make_response
 from app import recommender
 
 class dish_model():
-    def recommend(self,id):
+
+    def recommend_model(self,id):
         return recommender.recommend(id)
+
+    def prompt_recommend_model(self,data):
+        try:
+            input_ingredients=data.get("ingredients")
+            input_minutes=data.get("minutes")
+            return recommender.recommend_prompt(input_ingredients,input_minutes)
+        except KeyError:
+            return make_response({"message": "Missing required fields in input"}, 400)
+        except Exception as e:
+            return make_response({"Invalid input"},400)
             
             

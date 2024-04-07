@@ -5,6 +5,7 @@ from sklearn.preprocessing import StandardScaler
 from scipy.sparse import hstack
 from flask import make_response
 import random
+import ast
 
 class Recommender():
     def __init__(self):
@@ -75,3 +76,29 @@ class Recommender():
             print(e)
             return make_response({"message":"Internal server error."},500)
     
+    def recommend_prompt(self,input_ingredients,input_minutes=200000):
+        try:
+            input_minutes=int(input_minutes)
+            input_ingredients_set = set()
+            for i in input_ingredients.split(','):
+                input_ingredients_set.add(i.strip())
+            if (len(input_ingredients_set)<1):
+                return make_response({"message": "Invalid input"}, 400)
+            if not input_minutes or input_ingredients:
+                return make_response({"message": "Invalid input"}, 400)
+        except:
+            return make_response({"message": "Invalid input"}, 400)
+        try:
+            matching_details = []
+            for index, row in self.df.iterrows():
+                row_ingredients_set=ast.literal_eval(row['ingredients_set'])
+                if row_ingredients_set.issubset(input_ingredients_set) and row['minutes'] <= input_minutes:
+                    matching_details.append(row.to_dict())
+                    
+            if len(matching_details) < 1:
+                return {"message": "No items match your input."}, 204
+            else:
+                return {"dishes": matching_details}, 200
+        except Exception as e:
+            print(e)
+            return {"message": "Internal server error."}, 500
