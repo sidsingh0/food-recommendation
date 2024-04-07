@@ -19,10 +19,9 @@ def wishlist_add():
     data = request.get_json(silent=True)
     return user.wishlist_add_model(data)
 
-@app.route("/user/wishlist-remove",methods=["POST"])
-def wishlist_remove():
-    data = request.get_json(silent=True)
-    return user.wishlist_remove_model(data)
+@app.route("/user/wishlist-remove/<id>",methods=["DELETE"])
+def wishlist_remove(id):
+    return user.wishlist_remove_model(id)
 
 @app.route("/user/wishlist",methods=["GET"])
 def wishlist_get():

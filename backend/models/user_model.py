@@ -1,4 +1,4 @@
-from app import bcrypt
+from app import bcrypt, recommender 
 from bson import ObjectId
 from datetime import datetime
 from dotenv import load_dotenv
@@ -93,7 +93,7 @@ class user_model():
             return make_response({"message":"Internal server error."},500)
 
     @jwt_required()
-    def wishlist_remove_model(self, data):
+    def wishlist_remove_model(self, id):
         try:
             username=get_jwt_identity()
         except:
@@ -101,7 +101,7 @@ class user_model():
         if (not username):
             return make_response({"message":"Invalid token"},400)
         try:
-            dish_id=int(data.get("id"))
+            dish_id=int(id)
         except:
             return make_response({"message":"Invalid Dish ID"},400)
         try:
@@ -127,7 +127,7 @@ class user_model():
             user_details=self.collection.find_one({"username":username})
             if user_details:
                 wishlist=user_details.get("wishlist")
-                return make_response({"wishlist":wishlist},200)
+                return recommender.recommend_list(wishlist)
             else:
                 return make_response({"message":"User not found"},400)
         except Exception as e:

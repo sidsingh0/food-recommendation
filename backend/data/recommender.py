@@ -4,6 +4,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import StandardScaler
 from scipy.sparse import hstack
 from flask import make_response
+import random
 
 class Recommender():
     def __init__(self):
@@ -31,9 +32,43 @@ class Recommender():
                 row_dict = self.df.loc[self.df.index == i].to_dict(orient='records')
                 if row_dict:
                     recommended_details.append(row_dict[0])
-            return make_response({"dishes":recommended_details},200)
+            random.shuffle(recommended_details)
+            return make_response({"dishes":recommended_details[:8]},200)
         except (ValueError, IndexError) as e:
             return make_response({"message": "Invalid ID"}, 400)
         except Exception as e:
             print(e)
             return make_response({"message":"Internal server error."},500)
+
+    def recommend_list(self,wishlist):
+        try:
+            wishlist_length=len(wishlist)
+        except:
+            return make_response({"message": "No items in wishlist."}, 204)
+        try:
+            if (len(wishlist)==0):
+                return make_response({"message":"No items in wishlist."},204)
+            if (len(wishlist)>0):
+                if (len(wishlist)<3):
+                    random_elements=wishlist
+                else:
+                    random_elements = random.sample(wishlist, 3)
+                combined_recommendation_list=[]
+                recommended_details=[]
+                wishlist_details=[]
+                for i in random_elements:
+                    input_combined_features =  hstack([self.description_vec[i] * 0.1, self.tags_vec[i] * 0.1, self.name_vec[i] * 0.15, self.ingredients_vec[i] * 0.4, self.numerical_features_scaled[i].reshape(1, -1) * 0.35])
+                    nearest_dishes_distances, nearest_dishes_indices = self.model.kneighbors(input_combined_features)
+                    index_list=nearest_dishes_indices.flatten().tolist()[:8]
+                    combined_recommendation_list.extend(index_list)
+                random.shuffle(combined_recommendation_list)
+                print(combined_recommendation_list)
+                for i in combined_recommendation_list:
+                    row_dict = self.df.loc[self.df.index == i].to_dict(orient='records')
+                    if row_dict:
+                        recommended_details.append(row_dict[0])
+                return make_response({"dishes":recommended_details[:8]},200)
+        except Exception as e:
+            print(e)
+            return make_response({"message":"Internal server error."},500)
+    
