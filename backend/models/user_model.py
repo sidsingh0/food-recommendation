@@ -3,9 +3,10 @@ from bson import ObjectId
 from datetime import datetime
 from dotenv import load_dotenv
 from flask import make_response
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import json
 import os
+import pandas as pd
 from pymongo import MongoClient
 import pytz
 from validators.user_validator import *
@@ -63,6 +64,74 @@ class user_model():
             else:
                 return make_response({"message": "Error creating user"})
         except Exception as e:
+            return make_response({"message":"Internal server error."},500)
+    
+    @jwt_required()
+    def wishlist_add_model(self, data):
+        try:
+            username=get_jwt_identity()
+        except:
+            return make_response({"message": "Invalid token"}, 400)
+        if (not username):
+            return make_response({"message":"Invalid token"},400)
+        try:
+            dish_id=int(data.get("id"))
+            df=pd.read_csv('data/dishes.csv')
+            if dish_id not in df.index:
+                return make_response({"message":"Invalid Dish ID"},400)
+        except:
+            return make_response({"message":"Invalid Dish ID"},400)
+        try:
+            user_details=self.collection.find_one({"username":username})
+            if user_details:
+                self.collection.update_one({"username":username},{'$addToSet': {'wishlist': dish_id}})
+                return make_response({"message":"Added to the wishlist!"},200)
+            else:
+                return make_response({"message":"User not found"},400)
+        except Exception as e:
+            print(e)
+            return make_response({"message":"Internal server error."},500)
+
+    @jwt_required()
+    def wishlist_remove_model(self, data):
+        try:
+            username=get_jwt_identity()
+        except:
+            return make_response({"message": "Invalid token"}, 400)
+        if (not username):
+            return make_response({"message":"Invalid token"},400)
+        try:
+            dish_id=int(data.get("id"))
+        except:
+            return make_response({"message":"Invalid Dish ID"},400)
+        try:
+            user_details=self.collection.find_one({"username":username})
+            if user_details:
+                self.collection.update_one({"username":username},{'$pull': {'wishlist': dish_id}})
+                return make_response({"message":"Removed from the wishlist."},200)
+            else:
+                return make_response({"message":"User not found"},400)
+        except Exception as e:
+            print(e)
+            return make_response({"message":"Internal server error."},500)
+
+    @jwt_required()
+    def wishlist_model(self):
+        try:
+            username=get_jwt_identity()
+        except:
+            return make_response({"message": "Invalid token"}, 400)
+        if (not username):
+            return make_response({"message":"Invalid token"},400)        
+        try:
+            user_details=self.collection.find_one({"username":username})
+            if user_details:
+                wishlist=user_details.get("wishlist")
+                return make_response({"wishlist":wishlist},200)
+            else:
+                return make_response({"message":"User not found"},400)
+        except Exception as e:
+            print(e)
             return make_response({"message":"Internal server error."},500)
 
     def patch_model(self,data,id):
