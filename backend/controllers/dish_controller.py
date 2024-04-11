@@ -12,3 +12,4 @@ def dish_recommend(id):
 def prompt_recommend():
     data = request.get_json(silent=True)
     return dish.prompt_recommend_model(data)
+
