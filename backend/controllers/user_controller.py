@@ -14,10 +14,19 @@ def signup():
     data = request.get_json(silent=True)
     return user.signup_model(data)
 
+@app.route("/user/check-wishlist/<id>", methods=["GET"])
+def check_recommendation(id):
+    return user.check_wishlist(id)
+
 @app.route("/user/wishlist-add",methods=["POST"])
 def wishlist_add():
     data = request.get_json(silent=True)
     return user.wishlist_add_model(data)
+
+@app.route("/user/wishlist-toggle",methods=["POST"])
+def wishlist_toggle():
+    data = request.get_json(silent=True)
+    return user.wishlist_toggle_model(data)
 
 @app.route("/user/wishlist-remove/<id>",methods=["DELETE"])
 def wishlist_remove(id):

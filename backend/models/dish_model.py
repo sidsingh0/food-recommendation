@@ -13,8 +13,8 @@ class dish_model():
             input_minutes=data.get("minutes")
             return recommender.recommend_prompt(input_ingredients,input_minutes)
         except KeyError:
-            return make_response({"message": "Missing required fields in input"}, 400)
+            return make_response({"message": "Missing required fields in input","success":0}, 200)
         except Exception as e:
-            return make_response({"Invalid input"},400)
+            return make_response({"message":"Invalid input","success":0},200)
             
             

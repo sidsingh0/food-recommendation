@@ -1,16 +1,21 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import 'boxicons';
+import Logo from '/logo.png';
+
 function Navbar() {
+  const token = localStorage.getItem("token");
+  const handleSignout = () =>{
+    localStorage.setItem(null);
+  }
   return (
     <nav className='navbar container'>
-        <Link to="/" className='nav_link nav_logo'><span className='nav_link_span'>RECIPE</span>LAB</Link>
-        <div className='navbar_mid'>
+        <div className='navbar_start'>
             <Link to="/" className='nav_link'>Home</Link>
-            <Link to="/explore" className='nav_link'>Explore</Link>
+            <Link to="/questions" className='nav_link'>Explore</Link>
             <Link to="/wishlist" className='nav_link'>Wishlist</Link>
         </div>
-        <Link to="/"><box-icon name='user-circle' className='nav_link'></box-icon></Link>
+        <Link to="/" className='nav_mid'><img src={Logo}/></Link>
+        {token? (<button onClick={handleSignout} className='hero_button'>Sign Out</button>):(<Link to="/signin"><button className='hero_button'>Sign in</button></Link>)}
     </nav>
   )
 }

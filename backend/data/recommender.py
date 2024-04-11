@@ -1,9 +1,10 @@
+import json
 import pandas as pd
 import pickle
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import StandardScaler
 from scipy.sparse import hstack
-from flask import make_response
+from flask import make_response, jsonify
 import random
 import ast
 
@@ -33,22 +34,23 @@ class Recommender():
                 row_dict = self.df.loc[self.df.index == i].to_dict(orient='records')
                 if row_dict:
                     recommended_details.append(row_dict[0])
+            current_dish=self.df.iloc[id].to_dict()
             random.shuffle(recommended_details)
-            return make_response({"dishes":recommended_details[:8]},200)
+            return make_response({"dishes":recommended_details[:8],"currentdish":current_dish,"success":1},200)
         except (ValueError, IndexError) as e:
-            return make_response({"message": "Invalid ID"}, 400)
+            return make_response({"message": "Invalid ID","success":0}, 200)
         except Exception as e:
             print(e)
-            return make_response({"message":"Internal server error."},500)
+            return make_response({"message":"Internal server error.","success":0},200)
 
     def recommend_list(self,wishlist):
         try:
             wishlist_length=len(wishlist)
         except:
-            return make_response({"message": "No items in wishlist."}, 204)
+            return make_response({"message": "No items in wishlist.","wishlist_count":0,"success":0}, 200)
         try:
             if (wishlist_length==0):
-                return make_response({"message":"No items in wishlist."},204)
+                return make_response({"message":"No items in wishlist.","wishlist_count":0,"success":0},200)
             if (wishlist_length>0):
                 if (wishlist_length<3):
                     random_elements=wishlist
@@ -71,10 +73,11 @@ class Recommender():
                     row_dict = self.df.loc[self.df.index == i].to_dict(orient='records')
                     if row_dict:
                         recommended_details.append(row_dict[0])
-                return make_response({"dishes":recommended_details[:8],"wishlist":wishlist_details},200)    
+                # final_response=json.dumps(})
+                return make_response({"dishes":recommended_details[:8],"wishlist":wishlist_details,"success":1}),200
         except Exception as e:
             print(e)
-            return make_response({"message":"Internal server error."},500)
+            return make_response({"message":"Internal server error.","success":0},200)
     
     def recommend_prompt(self,input_ingredients,input_minutes=200000):
         try:
@@ -83,22 +86,21 @@ class Recommender():
             for i in input_ingredients.split(','):
                 input_ingredients_set.add(i.strip())
             if (len(input_ingredients_set)<1):
-                return make_response({"message": "Invalid input"}, 400)
-            if not input_minutes or input_ingredients:
-                return make_response({"message": "Invalid input"}, 400)
+                return make_response({"message": "Invalid input","success":0}, 200)
+
         except:
-            return make_response({"message": "Invalid input"}, 400)
+            return make_response({"message": "Invalid input","success":0}, 200)
         try:
             matching_details = []
             for index, row in self.df.iterrows():
-                row_ingredients_set=ast.literal_eval(row['ingredients_set'])
+                row_ingredients_set = set([i.strip() for i in row['ingredients'].split(',')])
                 if row_ingredients_set.issubset(input_ingredients_set) and row['minutes'] <= input_minutes:
                     matching_details.append(row.to_dict())
                     
             if len(matching_details) < 1:
-                return {"message": "No items match your input."}, 204
+                return {"message": "No items match your input.","success":0}, 200
             else:
-                return {"dishes": matching_details}, 200
+                return {"dishes": matching_details,"success":1}, 200
         except Exception as e:
             print(e)
-            return {"message": "Internal server error."}, 500
+            return {"message": "Internal server error.","success":0}, 200
