@@ -60,7 +60,7 @@ function Dish() {
             </p>
             <h2 className="pt-4">Steps</h2>
             <div className="mt-2 mb-0">
-              <Checklist steps={currentDish?.steps}/>              
+            {currentDish?.steps && <Checklist steps={currentDish.steps}/>}
             </div>
           </div>
         </div>

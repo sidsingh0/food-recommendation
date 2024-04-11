@@ -5,8 +5,8 @@ function Checklist({ steps }) {
     const [instructions, setInstructions] = useState([]); // empty array
     useEffect(() => {
         if (steps) {
-            steps = steps.replace(/'/g, '"');
-            const stepsArray = JSON.parse(steps).map((step) => step.trim().charAt(0).toUpperCase() + step.trim().slice(1));
+            steps = steps.slice(1,-1).replace(/['"]/g, '');
+            const stepsArray = steps.split(",").map((step) => step.trim().charAt(0).toUpperCase() + step.trim().slice(1));
             const stepsObject = stepsArray.map((step, index) => ({
                 index,
                 step,
@@ -17,7 +17,7 @@ function Checklist({ steps }) {
     }, [steps]);
     
     const handleToggleCompleted = (index) => {
-        const prevDone=true;
+        let prevDone=true;
         instructions.forEach(instruction => {
             if (instruction.index<index && !instruction.completed){
                 toast.error("Complete the pending steps first!");
@@ -36,7 +36,7 @@ function Checklist({ steps }) {
 
     useEffect(()=>{
         const areAllStepsCompleted = instructions.every(instruction => instruction.completed);
-        if (areAllStepsCompleted){
+        if (areAllStepsCompleted && instructions.length > 0){
             toast.success("Recipe Completed! Enjoy your meal!");
         }
     },[instructions])
@@ -44,7 +44,7 @@ function Checklist({ steps }) {
     return (
         <>
             {instructions.map((instruction) => (
-                <div className="d-flex gap-2 align-items-center">
+                <div key={instruction.index} className="d-flex gap-2 align-items-center">
                     <label>
                         <input type="checkbox" className="input"
                             id={"checkbox"+String(instruction.index)}
@@ -54,6 +54,7 @@ function Checklist({ steps }) {
                         <span className="custom-checkbox"></span>
                     </label>
                     <label className={`dish_body mb-0 ${instruction.completed ? 'strikethrough' : ''}`} htmlFor={"checkbox"+String(instruction.index)}>{instruction.step}</label>
+
                 </div>
             ))}
         </>
