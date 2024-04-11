@@ -61,6 +61,11 @@ h2{
     font-size: 14px;
     color: var(--accent);
 }
+.strikethrough{
+    text-decoration: line-through;
+    text-decoration-color: #bababa;
+    color: #bababa!important;
+}
 .hero_button{
     background-color: var(--accent);
     color: white;
@@ -330,3 +335,32 @@ h2{
     text-align: left;
 }
 /* Overriding bootstrap styles End*/
+
+.input[type="checkbox"] {
+    display: none;
+}
+.custom-checkbox {
+    margin-top: 3px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #949494;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+}
+.custom-checkbox::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background-color: var(--accent);
+    border-radius: 2px;
+    opacity: 0;
+}
+.input[type="checkbox"]:checked + .custom-checkbox::after {
+    opacity: 1;
+}

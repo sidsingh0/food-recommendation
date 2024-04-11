@@ -5,6 +5,7 @@ import Card from '../components/Card';
 import { HTTP_METHODS, HttpRequest } from '../services/ApiService';
 import ApiUrls from '../services/ApiUrls';
 import { toast } from 'react-hot-toast';
+import Checklist from '../components/Checklist';
 
 function Dish() {
   const { id } = useParams(); 
@@ -30,7 +31,6 @@ function Dish() {
   useEffect(()=>{
     HttpRequest(ApiUrls.getDishDetails+String(id), HTTP_METHODS.GET)
       .then((response) => {
-          console.log(response);
           if (response.success == 1) {  
             setCurrentDish(response.currentdish)
             setDishes(response.dishes)
@@ -59,9 +59,9 @@ function Dish() {
             {currentDish?.ingredients}
             </p>
             <h2 className="pt-4">Steps</h2>
-            <p className="mt-2 mb-0 dish_body">
-              Rosemary, Thyme, Sun dried tomatoes, onions, salad greens, garlic.
-            </p>
+            <div className="mt-2 mb-0">
+              <Checklist steps={currentDish?.steps}/>              
+            </div>
           </div>
         </div>
         <div className="col-xl-4 px-0">
