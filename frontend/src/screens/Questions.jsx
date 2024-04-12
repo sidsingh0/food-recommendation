@@ -11,35 +11,36 @@ function Questions() {
   const [minutes, setMinutes]=useState("")
   const [ingredient, setIngredient] = useState('');
   const [ingredientList, setIngredientList] = useState([]);
-  const [hasTimeLimit, setHasTimeLimit]=useState(true)
   const navigate = useNavigate();
 
   const handleSubmit =()=>{
-    console.log({"ingredients":ingredientList.join(","),"minutes":hasTimeLimit?"":minutes});
-    HttpRequest(ApiUrls.promptDetails, HTTP_METHODS.POST,{"ingredients":ingredientList.join(","),"minutes":hasTimeLimit?"":minutes})
-      .then((response) => {
-        console.log(response);
-        if (response.success==1){
-          setError("")
-          const dish_list=response.dishes
-          localStorage.setItem('dishes', JSON.stringify(dish_list));
-          navigate('/explore');
-        }
-        else{
-          setError(response.message)
-        }
-    });
+    if (ingredientList.length>1){
+      HttpRequest(ApiUrls.promptDetails, HTTP_METHODS.POST,{"ingredients":ingredientList.join(","),minutes})
+        .then((response) => {
+          console.log(response);
+          if (response.success==1){
+            setError("")
+            const dish_list=response.dishes
+            localStorage.setItem('dishes', JSON.stringify(dish_list));
+            navigate('/explore');
+          }
+          else{
+            setError(response.message)
+          }
+      });
+    }else{
+      toast.error("Add atleast 2 ingredients")
+    } 
   }
 
   const handleMinutesChange = (e) => {
     const value = e.target.value.replace(/\D/g, ''); //only accepting numbers
     setMinutes(value);
-    setHasTimeLimit(value === "");
   }
   const handleNolimit = () =>{
     setMinutes("");
-    setHasTimeLimit(true);
   }
+
   const handleIngredientChange = (e) =>{
     const value = e.target.value.replace(/[^A-Za-z,\s]/g, '');
     setIngredient(value);
@@ -96,7 +97,7 @@ function Questions() {
                     onChange={(e) => handleMinutesChange(e)}
                     type="text" className="form-control" id="minutes" placeholder=""/>                
                 </div>
-                <button onClick={handleNolimit} className={hasTimeLimit?("questions_limit_yes"):("questions_limit")}>
+                <button onClick={handleNolimit} className={minutes===""?("questions_limit_yes"):("questions_limit")}>
                   <p>No limit</p>
                 </button>
               </div>

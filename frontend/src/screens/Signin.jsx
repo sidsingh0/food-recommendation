@@ -63,16 +63,16 @@ function Signin() {
               {error && (<p>{error}</p>)}
 
               <div className="w-100">
-                <ul class="nav nav-tabs align-items-center justify-content-center mb-2" id="myTab" role="tablist">
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Sign In</button>
+                <ul className="nav nav-tabs align-items-center justify-content-center mb-2" id="myTab" role="tablist">
+                  <li className="nav-item" role="presentation">
+                    <button className="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Sign In</button>
                   </li>
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Register</button>
+                  <li className="nav-item" role="presentation">
+                    <button className="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Register</button>
                   </li>
                 </ul>
-                <div class="tab-content" id="myTabContent">
-                  <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                <div className="tab-content" id="myTabContent">
+                  <div className="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabIndex="0">
                     <div className="mb-3 w-100">
                       <label htmlFor="username" className="form-label">Username</label>
                       <input ref={usernameRef} type="text" className="form-control" id="username" placeholder=""/>
@@ -83,7 +83,7 @@ function Signin() {
                     </div>
                     <div className="d-flex justify-content-center"><button className='hero_button' onClick={handleSignin}>Sign in</button></div>
                   </div>
-                  <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                  <div className="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabIndex="0">
                     <div className="mb-3 w-100">
                       <label htmlFor="registername" className="form-label">Name</label>
                       <input ref={registerNameRef} type="text" className="form-control" id="registername" placeholder=""/>

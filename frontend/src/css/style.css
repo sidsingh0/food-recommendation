@@ -8,7 +8,6 @@
     --red-border: 1.5px solid #f76a55;
     --red-text: #f76a55;
 }
-
 .source_serif {
     font-family: "Source Serif 4", serif;
     font-optical-sizing: auto;
@@ -56,6 +55,20 @@ h2{
     font-size: 24px;
     line-height: 1.1;
     font-weight: 580;
+}
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #F5F5F5;
+}
+::-webkit-scrollbar-thumb
+{
+	background-color: var(--red-text);
 }
 .error{
     font-size: 14px;
@@ -327,9 +340,9 @@ h2{
 .nav-link.active{   
     border-radius: 30px;
     padding: 8px 35px;
-    color: var(--green-text);
-    border: var(--green-border);
-    background-color: #befd9f4d;
+    color: var(--green-text)!important;
+    border: var(--green-border)!important;
+    background-color: #befd9f4d!important;
 }
 .form-label{
     text-align: left;

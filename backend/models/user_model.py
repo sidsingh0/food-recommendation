@@ -63,7 +63,6 @@ class user_model():
             if insert_query.acknowledged:
                 expire_token_time = timedelta(hours=2)
                 token = create_access_token(identity=user.username, expires_delta=expire_token_time)
-                # token=create_access_token(user.username)
                 return make_response({"message": "User created successfully","token":token}, 200)
             else:
                 return make_response({"message": "Error creating user"},500)
