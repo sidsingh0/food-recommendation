@@ -13,16 +13,34 @@ class dish_model():
     def __init__(self):
         with open('data/nearest_dishes_model.pkl', 'rb') as file:
             self.model = pickle.load(file)
-        self.df=pd.read_csv('data/dishes.csv').dropna(subset=['description', 'ingredients', 'tags', 'name', 'calories', 'total_fat', 'sugar', 'sodium', 'protein', 'saturated_fat', 'carbohydrates'])
+        self.df=pd.read_csv('data/dishes.csv')
+        self.df['tags'] = self.df['tags'].fillna(' ')
         self.vectorizer = TfidfVectorizer(stop_words='english')
-        self.description_vec = self.vectorizer.fit_transform(self.df['description'].astype(str))
-        self.ingredients_vec = self.vectorizer.fit_transform(self.df['ingredients'].astype(str))
-        self.tags_vec = self.vectorizer.fit_transform(self.df['tags'].astype(str))
-        self.name_vec = self.vectorizer.fit_transform(self.df['name'].astype(str))
+        self.description_vec = self.vectorizer.fit_transform(self.df['description'])
+        self.ingredients_vec = self.vectorizer.fit_transform(self.df['ingredients'])
+        self.tags_vec = self.vectorizer.fit_transform(self.df['tags'])
+        self.name_vec = self.vectorizer.fit_transform(self.df['name'])
         self.scaler = StandardScaler()
         self.numerical_features = self.df[['calories', 'total_fat', 'sugar', 'sodium', 'protein', 'saturated_fat', 'carbohydrates']]
         self.numerical_features_scaled = self.scaler.fit_transform(self.numerical_features)
-        print("Model loaded successfully")
+        print("Recommendation Model loaded successfully")
+        with open('data/nearest_ingredients_model.pkl', 'rb') as file:
+            self.ingredient_model = pickle.load(file)
+        self.ingredient_model_vectorizer = TfidfVectorizer(stop_words='english')
+        self.ingredient_model_vec = self.ingredient_model_vectorizer.fit_transform(self.df['ingredients'])
+        print("Search Model loaded successfully")
+        
+    def indices_to_dict(self, row_index):
+        if isinstance(row_index, int):
+            return self.df.iloc[row_index].to_dict()
+        if isinstance(row_index, list):
+            recommended_details=[]
+            for i in row_index:
+                row_dict = self.df.loc[self.df.index == i].to_dict(orient='records')
+                if row_dict:
+                    recommended_details.append(row_dict[0])
+            random.shuffle(recommended_details)
+            return(recommended_details)
 
     def recommend_model(self,id):
         try:
@@ -30,15 +48,11 @@ class dish_model():
             input_combined_features =  hstack([self.description_vec[id] * 0.1, self.tags_vec[id] * 0.1, self.name_vec[id] * 0.15, self.ingredients_vec[id] * 0.4, self.numerical_features_scaled[id].reshape(1, -1) * 0.35])
             nearest_dishes_distances, nearest_dishes_indices = self.model.kneighbors(input_combined_features)
             index_list=nearest_dishes_indices.flatten().tolist()
-            recommended_details=[]
-            for i in index_list:
-                row_dict = self.df.loc[self.df.index == i].to_dict(orient='records')
-                if row_dict:
-                    recommended_details.append(row_dict[0])
-            current_dish=self.df.iloc[id].to_dict()
-            random.shuffle(recommended_details)
+            recommended_details=self.indices_to_dict(index_list)
+            current_dish=self.indices_to_dict(id)
             return make_response({"dishes":recommended_details[:8],"currentdish":current_dish,"success":1},200)
         except (ValueError, IndexError) as e:
+            print(e)
             return make_response({"message": "Invalid ID","success":0}, 200)
         except Exception as e:
             print(e)
@@ -52,30 +66,39 @@ class dish_model():
             return make_response({"message": "Missing required fields in input","success":0}, 200)
         except Exception as e:
             return make_response({"message":"Invalid input","success":0},200)
-
         try:
             if (input_minutes==""):
                 input_minutes=200000
             input_minutes=int(input_minutes)
             input_ingredients_set = set()
             for i in input_ingredients.split(','):
-                input_ingredients_set.add(i.strip())
-            if (len(input_ingredients_set)<1):
-                return make_response({"message": "Invalid input","success":0}, 200)
+                input_ingredients_set.add(i.strip().lower())
+            if (len(input_ingredients_set)<2):
+                return make_response({"message": "Add atleast 2 ingredients","success":0}, 200)
         except:
             return make_response({"message": "Invalid input","success":0}, 200)
-            
         try:
+            #using model to find similar dishes based on ingredients
+            input_vec=self.ingredient_model_vectorizer.transform([input_ingredients])
+            nearest_ingredient_dishes_distance, nearest_ingredient_dishes_indices = self.ingredient_model.kneighbors(input_vec)
+            recommended_details=self.indices_to_dict(nearest_ingredient_dishes_indices.flatten().tolist())
             matching_details = []
-            for index, row in self.df.iterrows():
-                row_ingredients_set = set([i.strip() for i in row['ingredients'].split(',')])
-                if row_ingredients_set.issubset(input_ingredients_set) and row['minutes'] <= input_minutes:
-                    matching_details.append(row.to_dict())
-                    
+            difference_details = []
+            for dish in recommended_details:
+                dish_ingredients_set = set([i.strip().lower() for i in dish['ingredients'].split(',')])
+                if dish_ingredients_set.issubset(input_ingredients_set) and dish['minutes'] <= input_minutes:
+                    matching_details.append(dish)
+                else:
+                    if(dish['minutes'] <= input_minutes):
+                        difference=dish_ingredients_set-input_ingredients_set
+                        dish["difference"] = ", ".join(list(difference))
+                        difference_details.append(dish)
+            difference_details=sorted(difference_details, key=lambda x: x["minutes"])
             if len(matching_details) < 1:
                 return {"message": "No items match your input.","success":0}, 200
             else:
-                return {"dishes": matching_details,"success":1}, 200
+                # print()
+                return {"dishes": matching_details,"success":1,"recommendations":difference_details}, 200
         except Exception as e:
             print(e)
             return {"message": "Internal server error.","success":0}, 200   

@@ -21,7 +21,9 @@ function Questions() {
           if (response.success==1){
             setError("")
             const dish_list=response.dishes
+            const recommendation_list=response.recommendations
             localStorage.setItem('dishes', JSON.stringify(dish_list));
+            localStorage.setItem('recommendations', JSON.stringify(recommendation_list));
             navigate('/explore');
           }
           else{

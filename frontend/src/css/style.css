@@ -248,6 +248,22 @@ h2{
     justify-content: center;
     cursor: pointer;
 }
+.card_time{
+    background-color: #dedede   ;
+    height: 40px;
+    border-radius: 30px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size: 16px;
+    font-weight: 600;
+}
+.card_bold{
+    font-weight: 400;
+    color: var(--accent);
+}
 /* Card Design End */
 
 /* Signin Screen  */

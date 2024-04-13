@@ -69,7 +69,27 @@ function Dish() {
             <h2>Nutritional Facts</h2>
             <div className="dish_nutrition_list d-flex">
               <p className="mt-2 mb-0 dish_body">Calories</p>
-              <p className="mt-2 mb-0 dish_body text-black">50 cal</p>
+              <p className="mt-2 mb-0 dish_body text-black">{currentDish?.calories}</p>
+            </div>
+            <div className="dish_nutrition_list d-flex">
+              <p className="mt-2 mb-0 dish_body">Protein</p>
+              <p className="mt-2 mb-0 dish_body text-black">{currentDish?.protein}</p>
+            </div>
+            <div className="dish_nutrition_list d-flex">
+              <p className="mt-2 mb-0 dish_body">Sugar</p>
+              <p className="mt-2 mb-0 dish_body text-black">{currentDish?.sugar}</p>
+            </div>
+            <div className="dish_nutrition_list d-flex">
+              <p className="mt-2 mb-0 dish_body">Sodium</p>
+              <p className="mt-2 mb-0 dish_body text-black">{currentDish?.sodium}</p>
+            </div>
+            <div className="dish_nutrition_list d-flex">
+              <p className="mt-2 mb-0 dish_body">Total Fat</p>
+              <p className="mt-2 mb-0 dish_body text-black">{currentDish?.total_fat}</p>
+            </div>
+            <div className="dish_nutrition_list d-flex">
+              <p className="mt-2 mb-0 dish_body">Saturated Fat</p>
+              <p className="mt-2 mb-0 dish_body text-black">{currentDish?.saturated_fat}</p>
             </div>
           </div>
           <div className="dish_panel rounded-4 p-4 mt-4">
