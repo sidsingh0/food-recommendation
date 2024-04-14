@@ -137,6 +137,19 @@ cd food-recommendation/frontend
 npm i
 ```
 
+9. Open vite.config.js in a text editor and comment the following line
+
+```
+origin: "http://0.0.0.0:8080",
+```
+
+to
+
+```
+//origin: "http://0.0.0.0:8080",
+
+```
+
 9. Build the application using
 
 ```
