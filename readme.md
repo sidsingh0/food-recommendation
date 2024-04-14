@@ -5,7 +5,7 @@ Recipe Labs, is a smart recipe recommendation application. It helps users figure
 The models are trained on Food.com dataset, which can be accessed on [Kaggle](https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions). 
 
 
-To view the model building and data pre-processing steps, you can visit [here](https://github.com/sidsingh0/food-recommendation/blob/master/notebook/FoodRecommendation.ipynb)
+To access the python notebook, you can visit [here](https://github.com/sidsingh0/food-recommendation/blob/master/notebook/FoodRecommendation.ipynb)
 
 
 ## Index
@@ -69,7 +69,7 @@ To stop the application write this command in terminal.
 docker-compose stop
 ```
 
-OR
+<center>OR</center>
 
 To stop the application and remove all the created containers, write this command in terminal.
 
@@ -137,32 +137,44 @@ cd food-recommendation/frontend
 npm i
 ```
 
-9. Open vite.config.js in a text editor and comment the following line
+9. For Developer mode
 
-```
-origin: "http://0.0.0.0:8080",
-```
+    1. Open vite.config.js in a text editor and comment the following line
 
-to
+    ```
+    origin: "http://0.0.0.0:8080",
+    ```
 
-```
-//origin: "http://0.0.0.0:8080",
+    to
 
-```
+    ```
+    //origin: "http://0.0.0.0:8080",
 
-9. Build the application using
+    ```
 
-```
-npm run build
-```
+    2. Run the following command to open the app in dev mode
 
-10. Run the application using
+    ```
+    npm run dev
+    ```
 
-```
-npm run start
-```
+    <center>OR</center>
 
-11. Use the application
+10. For production
+
+    1. Build the application using
+
+    ```
+    npm run build
+    ```
+
+    2. Run the application using
+
+    ```
+    npm run start
+    ```
+
+12. Use the application
 
 To access the application, go to your browser and type `http://localhost:8080` in the url. 
 
