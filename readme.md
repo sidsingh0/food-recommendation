@@ -1,13 +1,5 @@
 # Recipe Labs
 
-Recipe Labs, is a smart recipe recommendation application. It helps users figure out what food they can make with the ingredients they have and also recommend similar recipes based on properties of the food.
-
-The models are trained on Food.com dataset, which can be accessed on [Kaggle](https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions). 
-
-
-To access the python notebook, you can visit [here](https://github.com/sidsingh0/food-recommendation/blob/master/notebook/FoodRecommendation.ipynb)
-
-
 ## Index
 
 - [Introduction](#introduction)
@@ -16,11 +8,21 @@ To access the python notebook, you can visit [here](https://github.com/sidsingh0
 - [Setting up the app](#setting-up-the-app)
 - [Usage](#usage)
 
+## Introduction
+
+Recipe Labs, is a smart recipe recommendation application. It helps users figure out what food they can make with the ingredients they have and also recommend similar recipes based on properties of the food.
+
+The models are trained on Food.com dataset, which can be accessed on [Kaggle](https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions). 
+
+
+To access the python notebook, you can visit [here](https://github.com/sidsingh0/food-recommendation/blob/master/notebook/FoodRecommendation.ipynb)
+
 ## Features
 
 - Feature 1: Recommend recipes based on the input.
 - Feature 2: Recommend similar dishes based on a dish.
 - Feature 3: Wishlist to save recipes.
+
 
 ## Technologies
 
@@ -32,6 +34,7 @@ The app primarily, utilises Flask for backend to make it lightweight with minima
 - Database: MongoDB
 
 ## Setting up the app
+
 
 ### With Docker
 
@@ -76,6 +79,7 @@ To stop the application and remove all the created containers, write this comman
 ```
 docker-compose down
 ```
+
 
 ### Without Docker
 
@@ -158,7 +162,7 @@ npm i
     npm run dev
     ```
 
-    <center>OR</center>
+    <p align="center">OR</p>
 
 10. For production
 
@@ -177,6 +181,7 @@ npm i
 12. Use the application
 
 To access the application, go to your browser and type `http://localhost:8080` in the url. 
+
 
 ## Usage
 
