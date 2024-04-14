@@ -156,24 +156,31 @@ To access the application, go to your browser and type `http://localhost:8080` i
 ## Usage
 
 1. Open a browser and type `localhost:8080` in the Address bar.
+
 ![home](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/home.png)
 
 2. Click on the Signin Button at the top right, and either sign in, or create a new account.
+
 ![signin](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/signin.png)
 
 3. Click on the explore button. Enter the ingredients and Time you can spare for cooking (in minutes).  
+
 ![questions](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/questions.png)
 
 4. You will get a list of recipes that match your requirements. You will also get similar recipes that require a few ingredients more. You can click on the dish to go to the recipe page or you can wishlist the recipe for later.
+
 ![results](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/results.png)
 
 5. Once you click on the dish, you will get all the details about the dish, nutrition and a list of similar dishes too!
+
 ![dish](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/dish.png)
 
 6. You can also use the checklist to follow while cooking.
+
 ![checklist](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/checklist.png)
 
 7. Press on the Wishlist tab, to see your saved dishes and get recommendations based on it.
+
 ![wishlist](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/wishlist.png)
 
 
