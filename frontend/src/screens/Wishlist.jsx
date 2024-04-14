@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from "axios";
+import React, { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../services/AuthContext'; 
 import Card from '../components/Card';
 import { HTTP_METHODS, HttpRequest } from '../services/ApiService';
 import ApiUrls from '../services/ApiUrls';
@@ -8,9 +8,10 @@ import { toast } from 'react-hot-toast';
 function Wishlist() {
   const [wishlist, setWishlist]=useState([]);
   const [reccommendation, setReccommendation]=useState([]);
+  const { handleLogout } = useContext(AuthContext);
 
   useEffect(()=>{
-    HttpRequest(ApiUrls.getWishlist, HTTP_METHODS.GET)
+    HttpRequest(ApiUrls.getWishlist, HTTP_METHODS.GET, null, handleLogout)
       .then((response) => {
           if (response.success == 1) {  
             setReccommendation(response.dishes)
@@ -24,7 +25,6 @@ function Wishlist() {
   const updateWishlist = () =>{
     HttpRequest(ApiUrls.getWishlist, HTTP_METHODS.GET)
       .then((response) => {
-          console.log(response);
           if (response.success == 1) {  
             setReccommendation(response.dishes)
             setWishlist(response.wishlist)

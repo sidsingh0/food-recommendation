@@ -20,8 +20,7 @@ function Checklist({ steps }) {
         let prevDone=true;
         instructions.forEach(instruction => {
             if (instruction.index<index && !instruction.completed){
-                toast.error("Complete the pending steps first!");
-                prevDone=false
+                prevDone=false;
             }
         });
         if(prevDone){
@@ -30,7 +29,8 @@ function Checklist({ steps }) {
                   itemIndex === index ? { ...item, completed: !item.completed } : item
                 )
             );
-            
+        }else{
+            toast.error("Complete the pending steps first!");
         }
     };
 

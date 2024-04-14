@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../services/AuthContext'; 
 import {Bookmark, BookmarkCheckFill } from 'react-bootstrap-icons';
 import { useParams,useNavigate } from 'react-router-dom';
 import Card from '../components/Card';
@@ -8,6 +9,7 @@ import { toast } from 'react-hot-toast';
 import Checklist from '../components/Checklist';
 
 function Dish() {
+  const { handleLogout } = useContext(AuthContext);
   const { id } = useParams(); 
   const navigate = useNavigate(); 
   const [wishlist, setWishlist]=useState(0)
@@ -19,7 +21,7 @@ function Dish() {
   }
   
   const toggleWishlist = () => {
-    HttpRequest(ApiUrls.wishlistToggle, HTTP_METHODS.POST, {"id":currentDish?.index})
+    HttpRequest(ApiUrls.wishlistToggle, HTTP_METHODS.POST, {"id":currentDish?.index}, handleLogout)
     .then((response) => {
         if (response.success == 1) {  
           setWishlist(response.is_in_wishlist)
@@ -73,23 +75,23 @@ function Dish() {
             </div>
             <div className="dish_nutrition_list d-flex">
               <p className="mt-2 mb-0 dish_body">Protein</p>
-              <p className="mt-2 mb-0 dish_body text-black">{currentDish?.protein}</p>
+              <p className="mt-2 mb-0 dish_body text-black">{currentDish?.protein}g</p>
             </div>
             <div className="dish_nutrition_list d-flex">
               <p className="mt-2 mb-0 dish_body">Sugar</p>
-              <p className="mt-2 mb-0 dish_body text-black">{currentDish?.sugar}</p>
+              <p className="mt-2 mb-0 dish_body text-black">{currentDish?.sugar}g</p>
             </div>
             <div className="dish_nutrition_list d-flex">
               <p className="mt-2 mb-0 dish_body">Sodium</p>
-              <p className="mt-2 mb-0 dish_body text-black">{currentDish?.sodium}</p>
+              <p className="mt-2 mb-0 dish_body text-black">{currentDish?.sodium}mg</p>
             </div>
             <div className="dish_nutrition_list d-flex">
               <p className="mt-2 mb-0 dish_body">Total Fat</p>
-              <p className="mt-2 mb-0 dish_body text-black">{currentDish?.total_fat}</p>
+              <p className="mt-2 mb-0 dish_body text-black">{currentDish?.total_fat}g</p>
             </div>
             <div className="dish_nutrition_list d-flex">
               <p className="mt-2 mb-0 dish_body">Saturated Fat</p>
-              <p className="mt-2 mb-0 dish_body text-black">{currentDish?.saturated_fat}</p>
+              <p className="mt-2 mb-0 dish_body text-black">{currentDish?.saturated_fat}g</p>
             </div>
           </div>
           <div className="dish_panel rounded-4 p-4 mt-4">

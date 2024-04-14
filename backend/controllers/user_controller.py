@@ -26,12 +26,3 @@ def wishlist_toggle():
 @app.route("/user/wishlist",methods=["GET"])
 def wishlist_get():
     return user.wishlist_model()
-
-@app.route("/user/patch/<id>",methods=["PATCH"])
-def user_patch(id):
-    data = request.get_json(silent=True)
-    return user.patch_model(data,id)
-
-@app.route("/user/delete/<id>",methods=["DELETE"])
-def user_delete(id):
-    return user.delete_model(id)

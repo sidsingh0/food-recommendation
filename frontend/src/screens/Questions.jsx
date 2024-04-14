@@ -1,5 +1,5 @@
-import React, {useRef, useState} from 'react'
-import FoodImg from '/food.png'
+import React, { useState, useContext} from 'react'
+import { AuthContext } from '../services/AuthContext'; 
 import { useNavigate } from 'react-router-dom';
 import {Trash} from 'react-bootstrap-icons';
 import { HttpRequest,HTTP_METHODS } from '../services/ApiService';
@@ -7,6 +7,7 @@ import ApiUrls from '../services/ApiUrls';
 import { toast } from 'react-hot-toast';
 
 function Questions() {
+  const { handleLogout } = useContext(AuthContext);
   const [error,setError]=useState("")
   const [minutes, setMinutes]=useState("")
   const [ingredient, setIngredient] = useState('');
@@ -15,9 +16,8 @@ function Questions() {
 
   const handleSubmit =()=>{
     if (ingredientList.length>1){
-      HttpRequest(ApiUrls.promptDetails, HTTP_METHODS.POST,{"ingredients":ingredientList.join(","),minutes})
+      HttpRequest(ApiUrls.promptDetails, HTTP_METHODS.POST,{"ingredients":ingredientList.join(","),minutes},handleLogout)
         .then((response) => {
-          console.log(response);
           if (response.success==1){
             setError("")
             const dish_list=response.dishes

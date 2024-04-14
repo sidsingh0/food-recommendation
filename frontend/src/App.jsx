@@ -7,23 +7,27 @@ import Signin from './screens/Signin';
 import Wishlist from './screens/Wishlist';
 import Navbar from "./components/Navbar";
 import Explore from "./screens/Explore";
+import ProtectedRoute from './services/ProtectedRoute';
+import { AuthContext, AuthProvider } from './services/AuthContext';
 
 function App() {
   return (
-    <div className="App">
+    <AuthProvider>
+      <div className="App">
         <Router>
             <Navbar/>
             <Toaster />
             <Routes>
                 <Route exact path="/" element={<Home />} />
-                <Route exact path="questions" element={<Questions />} />
-                <Route exact path="explore" element={<Explore/>}/>
-                <Route exact path="wishlist" element={<Wishlist />} />
                 <Route exact path="signin" element={<Signin />}></Route>
-                <Route exact path="dish/:id" element={<Dish />}></Route>
+                <Route exact path="wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>}/>
+                <Route exact path="dish/:id" element={<ProtectedRoute><Dish /></ProtectedRoute>}/>
+                <Route exact path="questions" element={<ProtectedRoute><Questions /></ProtectedRoute>} />
+                <Route exact path="explore" element={<ProtectedRoute><Explore/></ProtectedRoute>}/>
             </Routes>
         </Router>
-    </div>
+      </div>
+    </AuthProvider>
   )
 }
 

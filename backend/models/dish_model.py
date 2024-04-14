@@ -81,24 +81,26 @@ class dish_model():
             #using model to find similar dishes based on ingredients
             input_vec=self.ingredient_model_vectorizer.transform([input_ingredients])
             nearest_ingredient_dishes_distance, nearest_ingredient_dishes_indices = self.ingredient_model.kneighbors(input_vec)
-            recommended_details=self.indices_to_dict(nearest_ingredient_dishes_indices.flatten().tolist())
+            nearest_ingredient_dishes_indices=nearest_ingredient_dishes_indices.flatten().tolist()
+
             matching_details = []
             difference_details = []
+            for index, row in self.df.iterrows():
+                dish_ingredients_set = set([i.strip().lower() for i in row['ingredients'].split(',')])
+                if dish_ingredients_set.issubset(input_ingredients_set) and row['minutes'] <= input_minutes:
+                    matching_details.append(row.to_dict())
+                    if (index in nearest_ingredient_dishes_indices):
+                        nearest_ingredient_dishes_indices.remove(index)
+            
+            recommended_details=self.indices_to_dict(nearest_ingredient_dishes_indices)
             for dish in recommended_details:
                 dish_ingredients_set = set([i.strip().lower() for i in dish['ingredients'].split(',')])
-                if dish_ingredients_set.issubset(input_ingredients_set) and dish['minutes'] <= input_minutes:
-                    matching_details.append(dish)
-                else:
-                    if(dish['minutes'] <= input_minutes):
-                        difference=dish_ingredients_set-input_ingredients_set
-                        dish["difference"] = ", ".join(list(difference))
-                        difference_details.append(dish)
+                if(dish['minutes'] <= input_minutes):
+                    difference=dish_ingredients_set-input_ingredients_set
+                    dish["difference"] = ", ".join(list(difference))
+                    difference_details.append(dish)
             difference_details=sorted(difference_details, key=lambda x: x["minutes"])
-            if len(matching_details) < 1:
-                return {"message": "No items match your input.","success":0}, 200
-            else:
-                # print()
-                return {"dishes": matching_details,"success":1,"recommendations":difference_details}, 200
+            return {"dishes": matching_details,"success":1,"recommendations":difference_details}, 200
         except Exception as e:
             print(e)
             return {"message": "Internal server error.","success":0}, 200   

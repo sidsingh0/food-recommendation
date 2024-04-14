@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
+import { AuthContext } from '../services/AuthContext'; 
 import {Bookmark, BookmarkCheckFill} from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 import { HTTP_METHODS, HttpRequest } from '../services/ApiService';
@@ -6,7 +7,7 @@ import ApiUrls from '../services/ApiUrls';
 import { toast } from 'react-hot-toast';
 
 function Card({dish,updateWishlist}) {
-
+  const { handleLogout } = useContext(AuthContext);
   const [wishlist, setWishlist]=useState(0)
 
   const capitalizeWords = (sentence) => {
@@ -22,7 +23,7 @@ function Card({dish,updateWishlist}) {
     }
   }
   const toggleWishlist = () => {
-      HttpRequest(ApiUrls.wishlistToggle, HTTP_METHODS.POST, {"id":dish?.index})
+      HttpRequest(ApiUrls.wishlistToggle, HTTP_METHODS.POST, {"id":dish?.index},handleLogout)
       .then((response) => {
           if (response.success == 1) {  
             setWishlist(response.is_in_wishlist)
@@ -35,7 +36,7 @@ function Card({dish,updateWishlist}) {
   }
 
   useEffect(()=>{
-    HttpRequest(ApiUrls.checkWishlist+String(dish?.index), HTTP_METHODS.GET)
+    HttpRequest(ApiUrls.checkWishlist+String(dish?.index), HTTP_METHODS.GET, null, handleLogout)
       .then((response) => {
           if (response.success == 1) {  
             setWishlist(response.is_in_wishlist)

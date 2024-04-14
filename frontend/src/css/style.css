@@ -168,7 +168,17 @@ h2{
 .nav_mid>img{
     height: 40px;
 }
-
+.nav_dropdown{
+    display: none;
+}
+@media screen and (max-width:768px) {
+    .navbar_start, .hero_button{
+        display: none;
+    }
+    .nav_dropdown{
+        display: block;
+    }
+}
 /* Dish Screen */
 .dish_panel{
     border: var(--border);
@@ -362,6 +372,19 @@ h2{
 }
 .form-label{
     text-align: left;
+}
+.navbar_btn{
+    background-color: #dedede;
+    border: none;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content:center ;
+}
+.dropdown{
+    margin-left: 10px;
 }
 /* Overriding bootstrap styles End*/
 
