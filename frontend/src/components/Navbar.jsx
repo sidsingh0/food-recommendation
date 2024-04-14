@@ -15,7 +15,7 @@ function Navbar() {
             <Link to="/wishlist" className='nav_link'>Wishlist</Link>
         </div>
         <Link to="/" className='nav_mid'><img src={Logo}/></Link>
-        {isLoggedIn? (<button onClick={handleLogout} className='hero_button'>Sign Out</button>):(<Link to="/signin"><button className='hero_button'>Sign in</button></Link>)}
+        {isLoggedIn? (<button onClick={handleLogout} className='hero_button hero_button_disable'>Sign Out</button>):(<Link to="/signin"><button className='hero_button hero_button_disable'>Sign in</button></Link>)}
         <div className="dropdown nav_dropdown">
           <button className="navbar_btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <List size={20} color={"#000"}/>

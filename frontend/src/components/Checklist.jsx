@@ -45,7 +45,7 @@ function Checklist({ steps }) {
         <>
             {instructions.map((instruction) => (
                 <div key={instruction.index} className="d-flex gap-2 align-items-center">
-                    <label>
+                    <label className="checkboxlabelcontainer">
                         <input type="checkbox" className="input"
                             id={"checkbox"+String(instruction.index)}
                             checked={instruction.completed}

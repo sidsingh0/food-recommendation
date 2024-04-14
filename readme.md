@@ -20,7 +20,7 @@ To view the model building and data pre-processing steps, you can visit [here](h
 
 - Feature 1: Recommend recipes based on the input.
 - Feature 2: Recommend similar dishes based on a dish.
-- Feature 3: Wishlist to save recipes
+- Feature 3: Wishlist to save recipes.
 
 ## Technologies
 
@@ -101,7 +101,15 @@ cd food-recommendation/backend
 pip install -r requirements.txt
 ```
 
-4. Open models/user_model.py in a text editor and replace
+4. Open models directory
+
+```
+cd models
+```
+
+with your own MongoDB URI
+
+5. Open user_model.py in a text editor and replace
 
 ```
 self.client=MongoClient("mongodb://mongodb:27017")
@@ -110,36 +118,65 @@ self.client=MongoClient("mongodb://mongodb:27017")
 with your own MongoDB URI
 
 
-5. Navigate back to backend folder and start the backend service
+6. Navigate back to backend folder and start the backend service
 
 ```
+cd ..
 waitress-serve --listen=*:5000 app:app
 ```
 
-6. Open a new terminal and navigate to frontend directory
+7. Open a new terminal and navigate to frontend directory
 
 ```
 cd food-recommendation/frontend
 ```
 
-7. Install the required packages using
+8. Install the required packages using
 
 ```
 npm i
 ```
 
-8. Build the application using
+9. Build the application using
 
 ```
 npm run build
 ```
 
-9. Run the application using
+10. Run the application using
 
 ```
 npm run start
 ```
 
-10. Use the application
+11. Use the application
 
 To access the application, go to your browser and type `http://localhost:8080` in the url. 
+
+## Usage
+
+1. Open a browser and type `localhost:8080` in the Address bar.
+![home](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/home.png)
+
+2. Click on the Signin Button at the top right, and either sign in, or create a new account.
+![signin](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/signin.png)
+
+3. Click on the explore button. Enter the ingredients and Time you can spare for cooking (in minutes).  
+![questions](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/questions.png)
+
+4. You will get a list of recipes that match your requirements. You will also get similar recipes that require a few ingredients more. You can click on the dish to go to the recipe page or you can wishlist the recipe for later.
+![results](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/results.png)
+
+5. Once you click on the dish, you will get all the details about the dish, nutrition and a list of similar dishes too!
+![dish](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/dish.png)
+
+6. You can also use the checklist to follow while cooking.
+![checklist](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/checklist.png)
+
+7. Press on the Wishlist tab, to see your saved dishes and get recommendations based on it.
+![wishlist](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/wishlist.png)
+
+
+
+
+

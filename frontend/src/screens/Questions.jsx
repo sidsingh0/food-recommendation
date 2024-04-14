@@ -66,10 +66,9 @@ function Questions() {
     setIngredientList(prevList => prevList.filter(ingredient=>ingredient!==ingredientToRemove));
   }
   return (
-    <div className="container">
+    <div className="container signin">
         <div className="row justify-content-center align-items-center signincontainer">
             <div className="signin_box mb-4 col-xl-4 col-lg-6 col-md-8 d-flex justify-content-center align-items-center flex-column rounded-4 p-4">
-              {/* <img className="signin_img" src={FoodImg} /> */}
               <h2 className="mb-3">Find Recipes</h2>
               {error && (<p className="error">{error}</p>)}
               <label htmlFor="ingredients" className="w-100 form-label">Ingredients</label>

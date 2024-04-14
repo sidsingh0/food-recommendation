@@ -172,7 +172,7 @@ h2{
     display: none;
 }
 @media screen and (max-width:768px) {
-    .navbar_start, .hero_button{
+    .navbar_start, .hero_button_disable{
         display: none;
     }
     .nav_dropdown{
@@ -385,6 +385,26 @@ h2{
 }
 .dropdown{
     margin-left: 10px;
+}
+@media screen and (max-width:768px) {
+    .signin.container, .dish.container, .signin.container{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .signin.container>.row, .dish.container>.row, .signin.container>.row{
+        width: 100%;
+    }
+    .checkboxlabelcontainer{
+        padding-right: 10px;
+    }
+    label.dish_body {
+        font-size: 14px;
+    }
+    .navbar.container{
+        justify-content: flex-start;
+        padding: 20px 10px;
+    }
 }
 /* Overriding bootstrap styles End*/
 

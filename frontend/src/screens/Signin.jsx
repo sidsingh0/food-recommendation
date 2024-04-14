@@ -63,7 +63,7 @@ function Signin() {
     }
   }
   return (
-    <div className="container">
+    <div className="container signin">
         <div className="row justify-content-center align-items-center signincontainer">
             <div className="signin_box mb-4 col-xl-4 col-lg-6 col-md-8 d-flex justify-content-center align-items-center flex-column rounded-4 p-4">
               <img className="signin_img mb-4" src={FoodImg} />

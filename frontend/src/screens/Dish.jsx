@@ -43,7 +43,7 @@ function Dish() {
   },[id])
 
   return (
-    <div className="container">
+    <div className="container dish">
       <div className="row mb-4">
         <div className="col-xl-8 px-0 pe-xl-4 mb-4">
           <div className="dish_panel rounded-4 p-4">
