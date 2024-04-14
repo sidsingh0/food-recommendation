@@ -17,7 +17,7 @@ class user_model():
     def __init__(self):
         load_dotenv()
         try:
-            self.client=MongoClient("mongodb://localhost:27017")
+            self.client=MongoClient("mongodb://mongodb:27017")
             self.db=self.client['food']
             self.collection=self.db['users']
             print("Connection successful to MongoDB")
@@ -90,16 +90,17 @@ class user_model():
         try:
             user_details=self.collection.find_one({"username":username})
             if user_details:
-                if "wishlist" not in user_details:        
-                    self.collection.update_one({"username": username}, {"$set": {"wishlist": []}})
-
-                if dish_id in user_details.get("wishlist"):
-                    self.collection.update_one({"username":username},{'$pull': {'wishlist': dish_id}})
-                    return make_response({"success":1,"message":"Removed from wishlist!","is_in_wishlist":0},200)
-
+                wishlist = user_details.get("wishlist", [])
+                if dish_id in wishlist:
+                    # Remove dish_id from the wishlist
+                    wishlist.remove(dish_id)
+                    self.collection.update_one({"username": username}, {"$set": {"wishlist": wishlist}})
+                    return make_response({"success": 1, "message": "Removed from wishlist!", "is_in_wishlist": 0}, 200)
                 else:
-                    self.collection.update_one({"username":username},{'$addToSet': {'wishlist': dish_id}})
-                    return make_response({"success":1,"message":"Added to the wishlist!","is_in_wishlist":1},200)
+                    # Add dish_id to the wishlist if not already present
+                    wishlist.append(dish_id)
+                    self.collection.update_one({"username": username}, {"$set": {"wishlist": wishlist}})
+                    return make_response({"success": 1, "message": "Added to wishlist!", "is_in_wishlist": 1}, 200)
             else:
                 return make_response({"message":"User not found"},404)
         except Exception as e:
