@@ -55,6 +55,9 @@ The backend code is organized in the following fashion:
   - `user_model.py` utilises the connection to mongodb database for storing and acccessing user data.
 - Validators: They contain objects that utilise [PyDantic](https://github.com/pydantic/pydantic) for type checking, type enforcement and type validation for the User Model.
 
+![backend](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/backendflow.png)
+
+
 ## Database
 
 MongoDB is used as the database for the following reasons:
