@@ -10,7 +10,7 @@ To view developer guide click [here](https://github.com/sidsingh0/food-recommend
 - [Features](#features)
 - [Setting up the app](#run-locally)
     - [Running with Docker](#running-with-docker)
-    - [Running with Docker](#running-without-docker)
+    - [Running without Docker](#running-without-docker)
 - [Usage](#usage)
 
 ## Features
@@ -121,15 +121,15 @@ Step 2: Click on the Signin Button at the top right, and either sign in, or crea
 
 ![signin](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/signin.png)
 
-Step 3: Click on the explore button. Enter the ingredients and time you can spare for cooking (in minutes).  
+Step 3: Click the explore button. Enter the ingredients and time you can spare for cooking (in minutes).  
 
 ![questions](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/questions.png)
 
-Step 4:  You will get a list of recipes that match your requirements. You will also get similar recipes that require a few ingredients more. You can click on the dish to go to the recipe page or you can wishlist the recipe for later.
+Step 4:  The application will display a list of recipes that match your requirements. You will also get similar recipes that require a few ingredients more. You can click on the dish to go to the recipe page or you can wishlist the recipe for later.
 
 ![results](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/results.png)
 
-Step 5: Once you click on the dish, you will get all the details about the dish, nutrition and a list of similar dishes too!
+Step 5: Once you click the dish, The application will display all the details about the dish, nutrition and a list of similar dishes too!
 
 ![dish](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/dish.png)
 
