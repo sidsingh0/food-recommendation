@@ -3,7 +3,7 @@
 
 Recipe Labs, is a smart recipe recommendation application. It helps users figure out what food they can make with the ingredients they have and also recommend similar recipes based on properties of the food.
 
-To view developer guide click [here](https://github.com/sidsingh0/food-recommendation/blob/master/dev.md).
+To view the developer guide click [here](https://github.com/sidsingh0/food-recommendation/blob/master/dev.md).
 
 ## Index
 
