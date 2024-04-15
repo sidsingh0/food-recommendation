@@ -17,7 +17,7 @@ class user_model():
     def __init__(self):
         load_dotenv()
         try:
-            self.client=MongoClient("mongodb://localhost:27017")
+            self.client=MongoClient("mongodb://mongodb:27017")
             self.db=self.client['food']
             self.collection=self.db['users']
             print("Connection successful to MongoDB")
