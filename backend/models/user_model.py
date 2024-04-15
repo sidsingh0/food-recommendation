@@ -84,9 +84,9 @@ class user_model():
             dish_id=int(data.get("id"))
             df=pd.read_csv('data/dishes.csv')
             if dish_id not in df.index:
-                return make_response({"message":"Invalid Dish ID"},400)
+                return make_response({"message":"Invalid Dish ID", "success":0},200)
         except:
-            return make_response({"message":"Invalid Dish ID"},400)
+            return make_response({"message":"Invalid Dish ID", "success":0},200)
         try:
             user_details=self.collection.find_one({"username":username})
             if user_details:
@@ -102,20 +102,20 @@ class user_model():
                     self.collection.update_one({"username": username}, {"$set": {"wishlist": wishlist}})
                     return make_response({"success": 1, "message": "Added to wishlist!", "is_in_wishlist": 1}, 200)
             else:
-                return make_response({"message":"User not found"},404)
+                return make_response({"message":"User not found"},401)
         except Exception as e:
             print(e)
-            return make_response({"message":"Internal server error."},500)
+            return make_response({"message":"Internal server error.", "success":0},200)
 
     @jwt_required()
     def check_wishlist_model(self, id):
         try:
             username = get_jwt_identity()
         except:
-            return make_response({"message": "Invalid token","success":0}, 200)
+            return make_response({"message": "Invalid token"}, 401)
 
         if not username:
-            return make_response({"message": "Invalid token","success":0}, 200)
+            return make_response({"message": "Invalid token"}, 401)
 
         try:
             dish_id = int(id)
@@ -148,8 +148,8 @@ class user_model():
                 wishlist=user_details.get("wishlist")
                 return dish.recommend_list(wishlist)
             else:
-                return make_response({"message":"User not found"},404)
+                return make_response({"message":"User not found"},401)
         except Exception as e:
             print(e)
-            return make_response({"message":"Internal server error."},500)
+            return make_response({"message":"Internal server error.", "success":0},200)
 

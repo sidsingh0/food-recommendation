@@ -11,10 +11,6 @@ CORS(app, resources={r"/*": {"origins": "http://localhost:8080"}})
 app.config["JWT_SECRET_KEY"] = "jtptechnical"
 jwt = JWTManager(app)
 
-@app.route("/")
-def index_page():
-    return "Index page"
-
 from controllers import *
 
 if __name__ == '__main__':

@@ -137,7 +137,6 @@ class dish_model():
                     row_dict = self.df.loc[self.df.index == i].to_dict(orient='records')
                     if row_dict:
                         recommended_details.append(row_dict[0])
-                # final_response=json.dumps(})
                 return make_response({"dishes":recommended_details[:8],"wishlist":wishlist_details,"success":1}),200
         except Exception as e:
             print(e)

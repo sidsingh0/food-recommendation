@@ -31,6 +31,10 @@ function Card({dish,updateWishlist}) {
             if (updateWishlist){
               updateWishlist()
             }
+          }else{
+            if(response.success==0){
+              toast.error(response.message)
+            }
           }
       });
   }

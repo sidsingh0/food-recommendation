@@ -31,11 +31,12 @@ function Explore() {
             </div>
             <h1 className="mb-2">Also consider</h1>
             <div className="row mb-4">
-                {recommendations.map((dish, index) => (
+                {recommendations && recommendations.length!=0 && recommendations.map((dish, index) => (
                     <div className="col-xl-3 col-lg-6 align-items-stretch mb-3">
                         <Card key={dish.index} dish={dish}/>
                     </div>
                 ))}
+                {recommendations && recommendations.length===0 && <p>No items match your search.</p>}
             </div>
         </div>
     );

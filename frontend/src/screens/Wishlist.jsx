@@ -17,7 +17,9 @@ function Wishlist() {
             setReccommendation(response.dishes)
             setWishlist(response.wishlist)
           }else{
-            // toast.error(response.message)
+            if (response.message){
+              toast.error(response.message)
+            }
           }
       });
   },[])
@@ -29,6 +31,9 @@ function Wishlist() {
             setReccommendation(response.dishes)
             setWishlist(response.wishlist)
           }else{
+            if(response.success==0){
+              toast.error(response.message)
+            }
             if (response.wishlist_count==0){
               setReccommendation([])
               setWishlist([])
