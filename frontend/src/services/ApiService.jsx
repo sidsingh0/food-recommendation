@@ -1,5 +1,5 @@
 import axios from "axios";
-const domain = "http://127.0.0.1:5000";
+const domain = "http://127.0.0.1:5000/v1";
 
 export const HTTP_METHODS = {
 	POST: 'POST',

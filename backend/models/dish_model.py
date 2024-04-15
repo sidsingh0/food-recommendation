@@ -48,6 +48,8 @@ class dish_model():
             input_combined_features =  hstack([self.description_vec[id] * 0.1, self.tags_vec[id] * 0.1, self.name_vec[id] * 0.15, self.ingredients_vec[id] * 0.4, self.numerical_features_scaled[id].reshape(1, -1) * 0.35])
             nearest_dishes_distances, nearest_dishes_indices = self.model.kneighbors(input_combined_features)
             index_list=nearest_dishes_indices.flatten().tolist()
+            if (id in index_list):
+                index_list.remove(id)
             recommended_details=self.indices_to_dict(index_list)
             current_dish=self.indices_to_dict(id)
             return make_response({"dishes":recommended_details[:8],"currentdish":current_dish,"success":1},200)

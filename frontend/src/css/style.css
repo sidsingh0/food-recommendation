@@ -408,6 +408,9 @@ h2{
 }
 /* Overriding bootstrap styles End*/
 
+.checkboxlabelcontainer{
+    padding-right: 10px;
+}
 .input[type="checkbox"] {
     display: none;
 }

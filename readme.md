@@ -12,7 +12,7 @@
 
 Recipe Labs, is a smart recipe recommendation application. It helps users figure out what food they can make with the ingredients they have and also recommend similar recipes based on properties of the food.
 
-The models are trained on Food.com dataset, which can be accessed on [Kaggle](https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions). 
+The models are trained on Food.com dataset, which can be accessed on [Kaggle](https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions). The model used is Nearest Neighbour.
 
 
 To access the python notebook, you can visit [here](https://github.com/sidsingh0/food-recommendation/blob/master/notebook/FoodRecommendation.ipynb)
@@ -39,7 +39,6 @@ The app primarily, utilises Flask for backend to make it lightweight with minima
 ### With Docker
 
 Make sure you have [Docker](https://docs.docker.com/get-docker/) and [Git](https://git-scm.com/downloads) installed on your system. 
-
 Run the following commands to use the app using Docker:
 
 1. Clone the repository
@@ -72,7 +71,7 @@ To stop the application write this command in terminal.
 docker-compose stop
 ```
 
-<center>OR</center>
+<p align="center">OR</p>
 
 To stop the application and remove all the created containers, write this command in terminal.
 
@@ -84,7 +83,6 @@ docker-compose down
 ### Without Docker
 
 Make sure you have installed [Node](https://nodejs.org/en/download), [Python](https://www.python.org/downloads/), [MongoDB](https://www.mongodb.com/try/download/community) and [Git](https://git-scm.com/downloads) on your system.
-
 Make sure your MongoDB service is running.
 
 1. Clone the repository
@@ -110,8 +108,6 @@ pip install -r requirements.txt
 ```
 cd models
 ```
-
-with your own MongoDB URI
 
 5. Open user_model.py in a text editor and replace
 
@@ -145,22 +141,21 @@ npm i
 
     1. Open vite.config.js in a text editor and comment the following line
 
-    ```
-    origin: "http://0.0.0.0:8080",
-    ```
+        ```
+        origin: "http://0.0.0.0:8080",
+        ```
 
-    to
+        to
 
-    ```
-    //origin: "http://0.0.0.0:8080",
-
-    ```
+        ```
+        //origin: "http://0.0.0.0:8080",
+        ```
 
     2. Run the following command to open the app in dev mode
 
-    ```
-    npm run dev
-    ```
+        ```
+        npm run dev
+        ```
 
     <p align="center">OR</p>
 
@@ -168,15 +163,15 @@ npm i
 
     1. Build the application using
 
-    ```
-    npm run build
-    ```
+        ```
+        npm run build
+        ```
 
     2. Run the application using
 
-    ```
-    npm run start
-    ```
+        ```
+        npm run preview
+        ```
 
 12. Use the application
 
@@ -193,7 +188,7 @@ To access the application, go to your browser and type `http://localhost:8080` i
 
 ![signin](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/signin.png)
 
-3. Click on the explore button. Enter the ingredients and Time you can spare for cooking (in minutes).  
+3. Click on the explore button. Enter the ingredients and time you can spare for cooking (in minutes).  
 
 ![questions](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/questions.png)
 
@@ -212,8 +207,4 @@ To access the application, go to your browser and type `http://localhost:8080` i
 7. Press on the Wishlist tab, to see your saved dishes and get recommendations based on it.
 
 ![wishlist](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/wishlist.png)
-
-
-
-
 
