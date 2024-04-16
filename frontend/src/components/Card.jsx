@@ -13,6 +13,7 @@ function Card({dish,updateWishlist}) {
   const capitalizeWords = (sentence) => {
     return sentence.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   }
+
   function convertMinutesToHoursAndMinutes(minutes) {
     var hours = Math.floor(minutes / 60);
     var remainingMinutes = minutes % 60;
@@ -22,6 +23,7 @@ function Card({dish,updateWishlist}) {
       return hours + " hr " + remainingMinutes + " m";
     }
   }
+
   const toggleWishlist = () => {
       HttpRequest(ApiUrls.wishlistToggle, HTTP_METHODS.POST, {"id":dish?.index},handleLogout)
       .then((response) => {
@@ -54,7 +56,7 @@ function Card({dish,updateWishlist}) {
         <div className="card_wishlist mb-2" onClick={toggleWishlist}>
           {wishlist ? <BookmarkCheckFill size={20}/> : <Bookmark size={20} />}
         </div>
-        <div className="card_time mb-2" onClick={toggleWishlist}>
+        <div className="card_time mb-2">
           {dish?.minutes && convertMinutesToHoursAndMinutes(dish?.minutes)}
         </div>
       </div>

@@ -7,6 +7,7 @@ class UserSignUp(BaseModel):
     name: str
     username: str
     
+    # defining custom validation functions
     @validator('name')
     def validate_name(cls, value):
         regex = r'^[a-zA-Z\s]+$'

@@ -40,6 +40,12 @@ function Dish() {
             navigate('/')
           }
       });
+    HttpRequest(ApiUrls.checkWishlist+String(id), HTTP_METHODS.GET, null, handleLogout)
+    .then((response) => {
+        if (response.success == 1) {  
+          setWishlist(response.is_in_wishlist)
+        }
+    });
   },[id])
 
   return (

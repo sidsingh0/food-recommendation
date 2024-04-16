@@ -36,7 +36,7 @@ function Questions() {
   }
 
   const handleMinutesChange = (e) => {
-    const value = e.target.value.replace(/\D/g, ''); //only accepting numbers
+    const value = e.target.value.replace(/\D/g, ''); //regex for numbers
     setMinutes(value);
   }
   const handleNolimit = () =>{
@@ -44,7 +44,7 @@ function Questions() {
   }
 
   const handleIngredientChange = (e) =>{
-    const value = e.target.value.replace(/[^A-Za-z,\s]/g, '');
+    const value = e.target.value.replace(/[^A-Za-z,\s]/g, ''); //regex for alphabets
     setIngredient(value);
   }
   const handleIngredientAdd = () =>{
@@ -65,6 +65,7 @@ function Questions() {
   const handleIngredientRemove = (ingredientToRemove) =>{
     setIngredientList(prevList => prevList.filter(ingredient=>ingredient!==ingredientToRemove));
   }
+  
   return (
     <div className="container signin">
         <div className="row justify-content-center align-items-center signincontainer">

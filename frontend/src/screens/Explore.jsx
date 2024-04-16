@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import { useNavigate } from 'react-router-dom';
 import Card from '../components/Card';
 
 function Explore() {
     const [dishes, setDishes] = useState([]);
     const [recommendations, setRecommendations] = useState([]);
-    const navigate = useNavigate(); 
 
+    //Setting data that we got via api call in Questions.jsx
     useEffect(() => {
         const storedData = localStorage.getItem('dishes');
         if (storedData) {
@@ -16,7 +15,7 @@ function Explore() {
         if (storedRec) {
             setRecommendations(JSON.parse(storedRec));
         }
-    }, [ navigate]);
+    }, []);
 
     return (
         <div className="container">

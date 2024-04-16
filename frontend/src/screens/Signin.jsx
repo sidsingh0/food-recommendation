@@ -31,7 +31,7 @@ function Signin() {
       HttpRequest(ApiUrls.signin, HTTP_METHODS.POST,{"username":username.value,"password":password.value})
         .then((response) => {
             if (response?.success === 1) {    
-              handleLogin(response.token); 
+              handleLogin(response.token); //setting login state in autcontext
               setError(response?.message)
               navigate("/")
             }else{
@@ -42,7 +42,7 @@ function Signin() {
   }
 
   const handleRegister = () =>{
-
+    //checking if there are any pending errors before checking
     if(rusername.error==="" && rpassword.error==="" && rname.error==="" && remail.error===""){
       HttpRequest(ApiUrls.register, HTTP_METHODS.POST,{"username":rusername.value,"password":rpassword.value,"name":rname.value, "email":remail.value})
         .then((response) => {
@@ -62,6 +62,7 @@ function Signin() {
       });
     }
   }
+
   return (
     <div className="container signin">
         <div className="row justify-content-center align-items-center signincontainer">

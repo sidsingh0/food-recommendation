@@ -17,6 +17,7 @@ class user_model():
     def __init__(self):
         load_dotenv()
         try:
+            # connecting to mongodb
             self.client=MongoClient("mongodb://mongodb:27017")
             self.db=self.client['food']
             self.collection=self.db['users']
@@ -28,14 +29,18 @@ class user_model():
         try:
             user=UserSignIn(**data)
         except ValueError as e:
+            # catching error from pydantic
             return make_response({"message": e.errors()[0]['msg'].split(", ", 1)[-1]}, 200)
         except Exception as e:
             return make_response({"message":"Please fill the fields correctly.","success":0},200)
         try:
             user_details=self.collection.find_one({"username":user.username})
+            # if user exists in db
             if user_details:
+                # comparing stored hashed password with user's input
                 if bcrypt.check_password_hash(user_details["password"], user.password):
                     expire_token_time = timedelta(hours=24)
+                    # generating JWT
                     token = create_access_token(identity=user.username, expires_delta=expire_token_time)
                     return make_response({"message":"Authentication successful.","token":token,"success":1},200)
                 else:
@@ -61,9 +66,11 @@ class user_model():
             user_details=self.collection.find_one({"username":user.username})     
             if (user_details):
                 return make_response({"message":"User already exists."},200)           
+            # generating hashed password to store
             hashed_password=bcrypt.generate_password_hash(user.password).decode('utf-8')
             insert_query=self.collection.insert_one({"email":user.email, "password":hashed_password, "name":user.name, "username":user.username})
             if insert_query.acknowledged:
+                # generating JWT
                 expire_token_time = timedelta(hours=24)
                 token = create_access_token(identity=user.username, expires_delta=expire_token_time)
                 return make_response({"message": "User created successfully","token":token,"success":1}, 200)
@@ -125,6 +132,7 @@ class user_model():
         try:
             user_details = self.collection.find_one({"username": username})
             if user_details:
+                #retrieving user's wishlist from db, if not present, assigning []
                 wishlist = user_details.get("wishlist", [])
                 is_in_wishlist = dish_id in wishlist
                 return make_response({"is_in_wishlist": is_in_wishlist,"success":1}, 200)
@@ -143,6 +151,7 @@ class user_model():
         if (not username):
             return make_response({"message":"Invalid token"},401)        
         try:
+            # retrieving user's wishlist from db
             user_details=self.collection.find_one({"username":username})
             if user_details:
                 wishlist=user_details.get("wishlist")

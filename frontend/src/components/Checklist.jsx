@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 
 function Checklist({ steps }) {
-    const [instructions, setInstructions] = useState([]); // empty array
+    const [instructions, setInstructions] = useState([]);
     useEffect(() => {
         if (steps) {
             steps = steps.slice(1,-1).replace(/['"]/g, '');
@@ -18,6 +18,7 @@ function Checklist({ steps }) {
     
     const handleToggleCompleted = (index) => {
         let prevDone=true;
+        //checking if previous steps, so the steps aren't skipped
         instructions.forEach(instruction => {
             if (instruction.index<index && !instruction.completed){
                 prevDone=false;

@@ -18,6 +18,7 @@ export const HttpRequest = async (url, method = 'GET', data = null, handleLogout
 				'Content-Type': 'application/json'
 			}
 		};
+		//Setting Bearer token in header
 		const token = localStorage.getItem("token");
 		if(token) {
 			config.headers['Authorization'] = 'Bearer ' + token
@@ -30,6 +31,7 @@ export const HttpRequest = async (url, method = 'GET', data = null, handleLogout
 
 	} catch (error) {
 		if (error.response.status === 401) {
+			// Handling unauthorized requests
 			console.log('401 Unauthorized error');
 			if (handleLogout) {
 				handleLogout();

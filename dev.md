@@ -1,5 +1,5 @@
 
-# Recipe Labs - For Developers
+# Recipe Labs - Developer Guide
 
 This guide is meant for developers. To view the production guide and usage click [here](https://github.com/sidsingh0/food-recommendation/blob/master/readme.md).
 
@@ -38,6 +38,8 @@ The frontend code is organized in the following fashion:
   - ApiService contains the logic for making API calls, setting headers (Bearer token).
   - AuthContext and ProtectedRoute contain authentication logic. AuthContext uses react's context api for global login state accesibility. It also handles logout and logins.
 
+![frontend](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/frontendflow.png)
+
 ## Backend
 
 Flask is used for creating the backend service for the following reasons:
@@ -56,7 +58,6 @@ The backend code is organized in the following fashion:
 - Validators: They contain objects that utilise [PyDantic](https://github.com/pydantic/pydantic) for type checking, type enforcement and type validation for the User Model.
 
 ![backend](https://raw.githubusercontent.com/sidsingh0/food-recommendation/master/screenshots/backendflow.png)
-
 
 ## Database
 
