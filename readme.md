@@ -46,9 +46,9 @@ Step 3: Start the project using docker compose
   docker-compose up --build
 ```
 
-Step 5: To access the application, go to your browser and type `http://localhost:8080` in the address bar.
+Step 5: To access the application, go to your browser and type `http://localhost:8080` in the address bar
 
-Step 6: Exit the application.
+Step 6: Exit the application
 
 ```bash
   docker-compose down
@@ -77,9 +77,9 @@ Step 3: Install the python dependencies
   pip install -r requirements.txt
 ```
 
-Step 4: Open models/user_model.py in a text editor and change `self.client=MongoClient("mongodb://mongodb:27017")` to your local MongoDB URI.
+Step 4: Open models/user_model.py in a text editor and change `self.client=MongoClient("mongodb://mongodb:27017")` to your local MongoDB URI
 
-Step 5: While in backend directory, start the backend service.
+Step 5: While in backend directory, start the backend service
 
 ```bash
   waitress-serve --listen=*:5000 app:app
@@ -109,7 +109,7 @@ Step 9: Run the application
   npm run preview
 ```
 
-Step 10: To access the application, go to your browser and type `http://localhost:8080` in the address bar.
+Step 10: To access the application, go to your browser and type `http://localhost:8080` in the address bar
 
 ## Usage
 
