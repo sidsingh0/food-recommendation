@@ -144,7 +144,7 @@ function Signin() {
                           setDetails={setRPassword} 
                           maxLen={50} 
                           regex={/^[a-zA-Z0-9]*$/} 
-                          regexText={"Please enter a valid email."}
+                          regexText={"Please enter only letters and numbers."}
                           inputType={"password"}
                           inputName={"Password"}
                           id={"rpassword"}
