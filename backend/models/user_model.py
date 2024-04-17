@@ -62,10 +62,10 @@ class user_model():
         try:
             user_details=self.collection.find_one({"email":user.email})
             if (user_details):
-                return make_response({"message":"User already exists."},200)
+                return make_response({"message":"Email already exists."},200)
             user_details=self.collection.find_one({"username":user.username})     
             if (user_details):
-                return make_response({"message":"User already exists."},200)           
+                return make_response({"message":"Username already exists."},200)           
             # generating hashed password to store
             hashed_password=bcrypt.generate_password_hash(user.password).decode('utf-8')
             insert_query=self.collection.insert_one({"email":user.email, "password":hashed_password, "name":user.name, "username":user.username})
